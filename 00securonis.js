@@ -60,14 +60,14 @@ user_pref("browser.region.update.region", "");                   // No region up
 // Set DuckDuckGo as default search engine
 user_pref("browser.search.defaultenginename", "DuckDuckGo");     // Default search engine name
 user_pref("browser.search.defaultenginename.US", "DuckDuckGo");  // US-specific default search engine
-user_pref("browser.search.defaulturl", "https://duckduckgo.com/?q=&t=securonis"); // Search URL
-user_pref("keyword.URL", "https://duckduckgo.com/?q=&t=securonis"); // Keyword search URL
+user_pref("browser.search.defaulturl", "https://duckduckgo.com/"); // Search URL
+user_pref("keyword.URL", "https://duckduckgo.com/"); // Keyword search URL
 user_pref("browser.search.order.3", "DuckDuckGo");              // Search engine order
 
 // DuckDuckGo as new tab page
-user_pref("browser.startup.homepage", "https://duckduckgo.com/?t=securonis"); // Homepage setting
+user_pref("browser.startup.homepage", "https://duckduckgo.com/"); // Homepage setting
 user_pref("browser.newtabpage.enabled", false);                  // Disable built-in new tab page
-user_pref("browser.newtab.url", "https://duckduckgo.com/?t=securonis"); // Custom new tab URL
+user_pref("browser.newtab.url", "https://duckduckgo.com/"); // Custom new tab URL
 user_pref("browser.search.hiddenOneOffs", "Google,Amazon.com,Bing,Yahoo,eBay,Twitter"); // Hide other search engines
 
 // ===== New Tab Configuration =====
