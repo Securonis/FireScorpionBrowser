@@ -1,141 +1,87 @@
-/* Firefox settings for Securonis Linux - Enhanced Privacy & Security */
-/* We also use policies.json to handle the default browser configuration */
-/* FireScorpion Browser - Enhanced Hardening Configuration */
+/* Firefox settings for Securonis Linux - System Pre-configuration */
+/* FireScorpion Browser - System Level Settings */
 
-/* NOTE: Main security and privacy hardening settings are in securonis.cfg */
-/* This file contains complementary settings that don't duplicate securonis.cfg */
+/* ===== IMPORTANT INFORMATION ===== */
+/* This file contains only system-level configuration - all hardening settings are in user.js */
+/* This file loads first before user.js */
 
-/* Telemetry settings removed - now managed in securonis.cfg */
+// ===== Proxy Settings for Tor and I2P =====
+// Configure proxy settings system-wide for anonymity
 
-/*
-  Settings for extension to not send data to firefox server automatically
-*/
-// Disable add-on information. https://support.mozilla.org/en-US/kb/how-stop-firefox-making-automatic-connections
-pref("extensions.getAddons.cache.enabled", false);
-// Remove recommended add-ons
-// https://support.mozilla.org/bm/questions/1264852
-pref("extensions.htmlaboutaddons.inline-options.enabled", false);
+// Use a PAC file for proxy configuration
+user_pref("network.proxy.type", 2);                              // Use PAC file for proxy configuration
+user_pref("network.proxy.autoconfig_url", "file:///usr/local/share/securonis/proxy.pac"); // Path to PAC file
 
-/* Privacy, tracking protection, fingerprinting, and WebRTC settings */
-/* Moved to securonis.cfg for centralized management */
+// Fallback to direct SOCKS proxy if PAC fails
+user_pref("network.proxy.socks", "127.0.0.1");                   // SOCKS proxy host (Tor)
+user_pref("network.proxy.socks_port", 9050);                     // SOCKS proxy port (Tor)
+user_pref("network.proxy.socks_remote_dns", true);               // Use proxy for DNS resolution
+user_pref("network.proxy.socks_version", 5);                     // SOCKS v5 protocol
 
-/* Hardware and Sensor Protection - Core settings moved to securonis.cfg */
-/* Keeping only unique settings that aren't in securonis.cfg */
-lockPref("dom.w3c_touch_events.enabled", 0);
-pref("dom.maxHardwareConcurrency", 2);
-pref("media.navigator.video.enabled", false);
-pref("media.getusermedia.aec_enabled", false);
-pref("media.getusermedia.agc_enabled", false);
-pref("media.getusermedia.noise_enabled", false);
-pref("media.audio_data.enabled", false);
-pref("camera.control.face_detection.enabled", false);
-pref("dom.webaudio.enabled", false);
-pref("media.webspeech.synth.enabled", false);
-pref("dom.vr.enabled", false);
-pref("javascript.use_us_english_locale", true);
-pref("browser.search.region", "US");
-lockPref("browser.region.update.enabled", false);
-lockPref("browser.region.update.region", "");
-// Disable Firefox's content block monitor report
-pref("browser.contentblocking.report.monitor.enabled", false);
-// Disable Firefox show mobile app report
-pref("browser.contentblocking.report.show_mobile_app", false);
-// Disable Firefox report VPN enabled
-pref("browser.contentblocking.report.vpn.enabled", false);
-// TODO think about media.webvtt.regions.enabled
-// Do not expose info when WebGL is enabled. License MIT @pyllyukko
-pref("webgl.enable-debug-renderer-info", false);
-// Disable remote debugging (Disabled by default). License MIT @pyllyukko
-// pref("devtools.debugger.remote-enabled", false);
-// pref("devtools.debugger.force-local", true);
+// I2P and Tor domain handling
+user_pref("network.dns.blockDotOnion", false);                   // Allow .onion domains
+user_pref("network.dns.blockDotI2p", false);                     // Allow .i2p domains
 
-/*
-  Some interesting settings that might break UX
-  License MIT @pyllyukko
-*/
-// Disable video stats to reduce fingerprinting
-pref("media.video_stats.enabled", false);
-// Don't use document specified fonts to prevent installed font enumeration
-// Disable because it made google meet (and possibly some other websites) have font problem
-// Fix for users: change value to 1
-// pref("browser.display.use_document_fonts", 0);
+// Local network exceptions for proxy
+user_pref("network.proxy.no_proxies_on", "127.0.0.1, localhost, 192.168.*.*, 10.*, 172.16.*.*, 172.17.*.*, 172.18.*.*, 172.19.*.*, 172.20.*.*, 172.21.*.*, 172.22.*.*, 172.23.*.*, 172.24.*.*, 172.25.*.*, 172.26.*.*, 172.27.*.*, 172.28.*.*, 172.29.*.*, 172.30.*.*, 172.31.*.*, i2p, .i2p");
 
-// Don't ask to install the Flash plugin
-pref("plugins.notifyMissingFlash", false);
+// ===== System Level UI Customizations =====
+// Force firefox to use dark theme
+user_pref("browser.theme.toolbar-theme", 0);                     // Dark theme setting
+user_pref("extensions.activeThemeID", "firefox-compact-dark@mozilla.org");
+user_pref("devtools.theme", "dark");                             // Dark theme for developer tools
+user_pref("browser.tabs.inTitlebar", 1);                         // Hide title bar to save space
 
-// Allow onion domains and I2P domains for enhanced anonymity networks support
-// Send DNS requuest through SOCKS when SOCKS proxy is in use. This prevents DNS leaks when using Tor
-// License MIT @pyllyukko https://trac.torproject.org/projects/tor/wiki/doc/TorifyHOWTO/WebBrowsers
-lockPref("network.proxy.socks_remote_dns", true);
-lockPref("network.dns.blockDotOnion", false);
-lockPref("network.dns.blockDotI2p", false);
+// ===== First-run and Welcome Screens =====
+// Disable first-run and welcome pages
+user_pref("browser.startup.homepage_override.mstone", "ignore");  // Skip version-specific welcome page
+user_pref("startup.homepage_welcome_url", "");                   // No welcome URL
+user_pref("startup.homepage_welcome_url.additional", "");        // No additional welcome URL
+user_pref("startup.homepage_override_url", "");                  // No override URL
+user_pref("browser.messaging-system.whatsNewPanel.enabled", false); // Disable What's New panel
+user_pref("browser.aboutwelcome.enabled", false);                // Disable about:welcome page
+user_pref("browser.rights.3.shown", true);                       // Don't show 'know your rights' on first run
 
-/* Enhanced Network Security */
-lockPref("network.http.referer.XOriginPolicy", 2);
-lockPref("network.http.referer.XOriginTrimmingPolicy", 2);
-lockPref("network.http.referer.spoofSource", true);
-lockPref("network.IDN_show_punycode", true);
-lockPref("network.file.disable_unc_paths", true);
-lockPref("network.gio.supported-protocols", "");
+// ===== Extension and Add-on Settings =====
+// Distribution add-ons configuration
+user_pref("extensions.autoDisableScopes", 0);                    // Don't disable any add-ons automatically
+user_pref("extensions.enabledScopes", 15);                       // Enable all extension scopes
+user_pref("extensions.installDistroAddons", true);               // Allow installation of distribution add-ons
+user_pref("extensions.getAddons.cache.enabled", false);          // Don't cache Mozilla add-on info
+user_pref("extensions.htmlaboutaddons.inline-options.enabled", false); // Disable inline options in about:addons
 
-// Network and proxy settings moved to securonis.cfg
+// ===== Region and Language Settings =====
+user_pref("browser.search.region", "US");                        // Default region for search
+user_pref("browser.region.update.enabled", false);               // Don't update region automatically
+user_pref("browser.region.network.url", "");                     // No region detection URL
+user_pref("browser.region.update.region", "");                   // No region updates
 
-/* DuckDuckGo search settings moved to securonis.cfg */
-// Keeping only unique settings that aren't in securonis.cfg
-lockPref("browser.search.hiddenOneOffs", "Google,Amazon.com,Bing,Yahoo,eBay,Twitter");
-lockPref("browser.search.order.3", "DuckDuckGo");
+// ===== DuckDuckGo Search Integration =====
+// Set DuckDuckGo as default search engine
+user_pref("browser.search.defaultenginename", "DuckDuckGo");     // Default search engine name
+user_pref("browser.search.defaultenginename.US", "DuckDuckGo");  // US-specific default search engine
+user_pref("browser.search.defaulturl", "https://duckduckgo.com/?q=&t=securonis"); // Search URL
+user_pref("keyword.URL", "https://duckduckgo.com/?q=&t=securonis"); // Keyword search URL
+user_pref("browser.search.order.3", "DuckDuckGo");              // Search engine order
 
-/* URL bar settings moved to securonis.cfg */
-// Keeping only unique settings that aren't in securonis.cfg
-pref("browser.urlbar.autoFill", false);
-pref("browser.urlbar.speculativeConnect.enabled", false);
-pref("browser.taskbar.lists.enabled", false);
-pref("browser.taskbar.lists.frequent.enabled", false);
-pref("browser.taskbar.lists.recent.enabled", false);
-pref("browser.taskbar.lists.tasks.enabled", false);
-pref("browser.taskbar.previews.enable", false);
+// DuckDuckGo as new tab page
+user_pref("browser.startup.homepage", "https://duckduckgo.com/?t=securonis"); // Homepage setting
+user_pref("browser.newtabpage.enabled", false);                  // Disable built-in new tab page
+user_pref("browser.newtab.url", "https://duckduckgo.com/?t=securonis"); // Custom new tab URL
+user_pref("browser.search.hiddenOneOffs", "Google,Amazon.com,Bing,Yahoo,eBay,Twitter"); // Hide other search engines
 
-/*
-  Customize layout
-*/
-// Disable URL trim so protocol is forced to show
-lockPref("browser.urlbar.trimURLs", false);
-// Hide title bar to save some space
-pref("browser.tabs.inTitlebar", 1);
-// Don't show WhatsNew on first run after every update
-pref("browser.startup.homepage_override.mstone", "ignore");
-// Dark theme for devtools
-pref("devtools.theme", "dark");
-// Force firefox to use dark theme.
-pref("browser.theme.toolbar-theme", 0);
-pref("extensions.activeThemeID", "firefox-compact-dark@mozilla.org");
-// Don't show 'know your rights' on first run
-pref("browser.rights.3.shown", true);
-pref("browser.uiCustomization.state", "{\"placements\":{\"widget-overflow-fixed-list\":[],\"nav-bar\":[\"back-button\",\"forward-button\",\"home-button\",\"stop-reload-button\",\"urlbar-container\",\"save-to-pocket-button\",\"privatebrowsing-button\",\"library-button\",\"downloads-button\",\"fxa-toolbar-menu-button\",\"ublock0_raymondhill_net-browser-action\",\"developer-button\"],\"toolbar-menubar\":[\"menubar-items\"],\"TabsToolbar\":[\"tabbrowser-tabs\",\"new-tab-button\",\"alltabs-button\"],\"PersonalToolbar\":[\"personal-bookmarks\"]},\"seen\":[\"save-to-pocket-button\",\"developer-button\",\"ublock0_raymondhill_net-browser-action\"],\"dirtyAreaCache\":[\"nav-bar\"],\"currentVersion\":17,\"newElementCount\":5}");
-
-// Set startup page - Always use DuckDuckGo
-
-/* New tab page activity stream settings moved to securonis.cfg */
-
-/* HTTPS hardening and form data protection settings moved to securonis.cfg */
-/* The following settings have been moved to securonis.cfg */
-/* - Content security measures */
-/* - Safe browsing privacy enhancements */
-/* - Network prefetching and speculative connections */
-
-/* Keeping unique activity stream settings that aren't duplicated */
-pref("browser.newtabpage.activity-stream.feeds.sections", false);
-pref("browser.newtabpage.activity-stream.feeds.system.topsites", false);
-pref("browser.newtabpage.activity-stream.feeds.system.topstories", false);
-pref("browser.newtabpage.activity-stream.feeds.systemtick", false);
-pref("browser.newtabpage.activity-stream.feeds.topsites", true);
-pref("browser.newtabpage.activity-stream.improvesearch.handoffToAwesomebar", false);
-pref("browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts", false);
-pref("browser.newtabpage.activity-stream.newNewtabExperience.enabled", false);
-pref("browser.newtabpage.activity-stream.section.highlights.includeBookmarks", false);
-pref("browser.newtabpage.activity-stream.section.highlights.includeDownloads", false);
-pref("browser.newtabpage.activity-stream.section.highlights.includeVisited", false);
-pref("browser.newtabpage.activity-stream.showSearch", false);
-lockPref("browser.newtabpage.activity-stream.showSponsored", false);
-lockPref("browser.newtabpage.activity-stream.showSponsoredTopSites", false);
-// TODO do not allow plugin to start landing page
+// ===== New Tab Configuration =====
+// Disable activity stream and sponsored content
+user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false); // No top stories
+user_pref("browser.newtabpage.activity-stream.feeds.snippets", false); // No snippets
+user_pref("browser.newtabpage.activity-stream.section.highlights.includePocket", false); // No Pocket
+user_pref("browser.newtabpage.activity-stream.showSponsored", false); // No sponsored content
+user_pref("browser.newtabpage.activity-stream.showSponsoredTopSites", false); // No sponsored sites
+user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false); // No add-on recommendations
+user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false); // No feature recommendations
+user_pref("browser.newtabpage.activity-stream.feeds.sections", false); // No sections
+user_pref("browser.newtabpage.activity-stream.feeds.system.topsites", false); // No top sites
+user_pref("browser.newtabpage.activity-stream.section.highlights.includeBookmarks", false); // No bookmarks
+user_pref("browser.newtabpage.activity-stream.section.highlights.includeDownloads", false); // No downloads
+user_pref("browser.newtabpage.activity-stream.section.highlights.includeVisited", false); // No visited sites
+user_pref("browser.newtabpage.activity-stream.showSearch", false); // No search bar
