@@ -1,18 +1,163 @@
 /**
  * Securonis FireScorpion Browser - user.js
  * 
- * This file contains complementary security and privacy settings
- * that do not conflict with securonis.cfg and 00securonis.js files.
+ * This file contains primary security and privacy hardening settings
+ * for the browser. This is where most hardening settings should be placed.
  * 
  * These settings are inspired by Tor Browser and
  * optimized to create minimal issues in daily usage.
  */
 
-// ===== Complementary Browser Fingerprinting Protections =====
+// ===== Telemetry and Data Collection Protection =====
+// Disable all telemetry and data collection features to maximize privacy
+
+// Prevent data submission to Mozilla
+user_pref("datareporting.policy.dataSubmissionEnabled", false);
+user_pref("datareporting.healthreport.uploadEnabled", false);
+user_pref("datareporting.policy.firstRunURL", "");
+user_pref("toolkit.telemetry.enabled", false);
+user_pref("toolkit.telemetry.unified", false);
+user_pref("toolkit.telemetry.server", "");
+user_pref("toolkit.telemetry.archive.enabled", false);
+user_pref("toolkit.telemetry.newProfilePing.enabled", false);
+user_pref("toolkit.telemetry.updatePing.enabled", false);
+user_pref("toolkit.telemetry.bhrPing.enabled", false);
+user_pref("toolkit.telemetry.firstShutdownPing.enabled", false);
+user_pref("toolkit.telemetry.shutdownPingSender.enabled", false);
+user_pref("toolkit.telemetry.pioneer-new-studies-available", false);
+user_pref("toolkit.telemetry.reportingpolicy.firstRun", false);
+user_pref("toolkit.telemetry.coverage.opt-out", true);
+user_pref("toolkit.coverage.opt-out", true);
+user_pref("toolkit.coverage.endpoint.base", "");
+user_pref("beacon.enabled", false);
+user_pref("browser.uitour.enabled", false);
+user_pref("browser.uitour.url", "");
+
+// Disable studies and experiments
+user_pref("app.shield.optoutstudies.enabled", false);
+user_pref("app.normandy.enabled", false);
+user_pref("app.normandy.api_url", "");
+
+// Disable crash reporter
+user_pref("breakpad.reportURL", "");
+user_pref("browser.tabs.crashReporting.sendReport", false);
+user_pref("browser.crashReports.unsubmittedCheck.enabled", false);
+user_pref("browser.crashReports.unsubmittedCheck.autoSubmit2", false);
+
+// ===== Disable Mozilla and Third-Party Integrations =====
+// Disable Pocket
+user_pref("extensions.pocket.enabled", false);
+
+// Disable Mozilla accounts
+user_pref("identity.fxaccounts.enabled", false);
+
+// Disable Firefox Sync
+user_pref("services.sync.enabled", false);
+user_pref("identity.sync.tokenserver.uri", "");
+
+// Disable access to Firefox Sync server
+user_pref("services.sync.serverURL", "");
+
+// Disable form autofill and browser history suggestions
+user_pref("browser.formfill.enable", false);
+user_pref("extensions.formautofill.addresses.enabled", false);
+user_pref("extensions.formautofill.creditCards.enabled", false);
+user_pref("extensions.formautofill.heuristics.enabled", false);
+
+// Disable password manager
+user_pref("signon.rememberSignons", false);
+user_pref("signon.autofillForms", false);
+user_pref("signon.formlessCapture.enabled", false);
+
+// Disable addon recommendations
+user_pref("extensions.getAddons.showPane", false);
+user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
+user_pref("browser.discovery.enabled", false);
+
+// ===== HTTPS and TLS Hardening =====
+// Force HTTPS-only mode for maximum security
+user_pref("dom.security.https_only_mode", true);
+user_pref("dom.security.https_only_mode.upgrade_local", true);
+
+// Disable TLS 1.0 and 1.1 (keep TLS 1.2 and 1.3 only)
+user_pref("security.tls.version.min", 3);
+user_pref("security.tls.version.max", 4);
+
+// OCSP hardening - must staple
+user_pref("security.ssl.enable_ocsp_must_staple", true);
+user_pref("security.OCSP.require", true);
+
+// Disable insecure passive content
+user_pref("security.mixed_content.block_display_content", true);
+user_pref("security.mixed_content.block_object_subrequest", true);
+
+// Disable insecure downloads from secure sites
+user_pref("dom.block_download_insecure", true);
+
+// Disable TLS Session Tickets
+user_pref("security.ssl.disable_session_identifiers", true);
+
+// Strict TLS negotiations
+user_pref("security.ssl.treat_unsafe_negotiation_as_broken", true);
+user_pref("security.ssl.require_safe_negotiation", true);
+
+// ===== Privacy and Tracking Protection =====
+// First-Party Isolation
+user_pref("privacy.firstparty.isolate", true);
+user_pref("privacy.firstparty.isolate.restrict_opener_access", true);
+
+// Tracking Protection
+user_pref("privacy.trackingprotection.enabled", true);
+user_pref("privacy.trackingprotection.pbmode.enabled", true);
+user_pref("privacy.trackingprotection.fingerprinting.enabled", true);
+user_pref("privacy.trackingprotection.cryptomining.enabled", true);
+user_pref("privacy.donottrackheader.enabled", true);
+user_pref("privacy.donottrackheader.value", 1);
+
+// Enhanced Tracking Protection (strict)
+user_pref("browser.contentblocking.category", "strict");
+user_pref("browser.contentblocking.features.strict", "tp,tpPrivate,cookieBehavior5,cookieBehaviorPBM5,cm,fp,stp");
+
+// ===== Comprehensive Browser Fingerprinting Protections =====
+user_pref("privacy.resistFingerprinting", true);                // Main fingerprinting resistance
 user_pref("privacy.resistFingerprinting.letterboxing", true);     // Letterboxing to reduce screen size fingerprinting
 user_pref("privacy.fingerprintingProtection.enabled", true);      // Additional fingerprinting protection (new feature)
 user_pref("privacy.window.maxInnerWidth", 1600);                  // Maximum window width limitation
 user_pref("privacy.window.maxInnerHeight", 900);                  // Maximum window height limitation
+user_pref("privacy.resistFingerprinting.block_mozAddonManager", true); // Prevent fingerprinting via add-on detection
+user_pref("browser.display.use_document_fonts", 1);              // Value 0 broke Google Meet
+user_pref("device.sensors.enabled", false);                      // Disable device sensors
+user_pref("geo.enabled", false);                                 // Disable geolocation
+user_pref("webgl.disabled", true);                               // Disable WebGL
+
+// Canvas fingerprint protection
+user_pref("privacy.resistFingerprinting.autoDeclineNoUserInputCanvasPrompts", true); // Auto-decline canvas access
+user_pref("canvas.capturestream.enabled", false);                // Disable canvas capture stream
+
+// ===== WebRTC Protection =====
+user_pref("media.peerconnection.enabled", true);                // Allow WebRTC but with protections
+user_pref("media.peerconnection.ice.default_address_only", true); // Use default IP address only
+user_pref("media.peerconnection.ice.no_host", true);          // Disable host ICE candidates
+user_pref("media.navigator.enabled", false);                   // Disable navigator.mediaDevices
+user_pref("media.peerconnection.turn.disable", true);         // Disable TURN servers
+user_pref("media.peerconnection.use_document_iceservers", false); // Don't use document provided ICE servers
+user_pref("media.peerconnection.video.enabled", false);        // Disable video in WebRTC
+
+// ===== Network Settings =====
+// Disable prefetching to prevent network leaks
+user_pref("network.dns.disablePrefetch", true);                // Disable DNS prefetching
+user_pref("network.dns.disablePrefetchFromHTTPS", true);       // Disable DNS prefetching from HTTPS
+user_pref("network.predictor.enabled", false);                 // Disable network prediction
+user_pref("network.predictor.enable-prefetch", false);         // Disable prefetch
+user_pref("network.prefetch-next", false);                     // Disable link prefetching
+user_pref("network.http.speculative-parallel-limit", 0);       // Disable speculative connections
+user_pref("browser.urlbar.speculativeConnect.enabled", false); // Disable speculative connections from URL bar
+
+// Disable DNS over HTTPS (preventing Cloudflare DNS)
+user_pref("network.trr.mode", 5);                              // Disable DNS over HTTPS
+user_pref("network.trr.uri", "");                              // Clear DoH URI
+user_pref("network.trr.bootstrapAddress", "");                // Clear DoH bootstrap address
+user_pref("network.trr.default_provider_uri", "");            // Clear DoH provider URI
 
 // ===== Advanced Network Isolation =====
 user_pref("privacy.partition.network_state", true);               // Network state partitioning
@@ -100,3 +245,55 @@ user_pref("browser.tabs.warnOnClose", false);                     // Disable war
 user_pref("browser.tabs.warnOnCloseOtherTabs", false);            // Disable warning when closing other tabs
 user_pref("full-screen-api.warning.delay", 0);                    // Remove fullscreen warning delay
 user_pref("full-screen-api.warning.timeout", 0);                  // Remove fullscreen warning timeout
+
+// ===== Safe Browsing Privacy =====
+// Disable Google Safe Browsing and phishing protection to prevent data sharing with Google
+user_pref("browser.safebrowsing.enabled", false);
+user_pref("browser.safebrowsing.phishing.enabled", false);
+user_pref("browser.safebrowsing.malware.enabled", false);
+user_pref("browser.safebrowsing.downloads.enabled", false);
+user_pref("browser.safebrowsing.downloads.remote.enabled", false);
+user_pref("browser.safebrowsing.downloads.remote.url", "");
+user_pref("browser.safebrowsing.provider.google.updateURL", "");
+user_pref("browser.safebrowsing.provider.google.gethashURL", "");
+user_pref("browser.safebrowsing.provider.google4.updateURL", "");
+user_pref("browser.safebrowsing.provider.google4.gethashURL", "");
+
+// ===== Cookie and Storage Policies =====
+// Default daily usage configuration - allows cookies with tracking protection
+user_pref("network.cookie.cookieBehavior", 5);                    // Block all cross-site cookies
+user_pref("network.cookie.lifetimePolicy", 0);                    // Accept cookies normally
+user_pref("network.cookie.thirdparty.sessionOnly", false);         // Allow third-party cookies to persist
+user_pref("network.cookie.thirdparty.nonsecureSessionOnly", true); // Still limit insecure third-party cookies to session
+
+// Cookie partitioning settings
+user_pref("privacy.partition.network_state", true);                // Partition network state
+user_pref("privacy.partition.serviceWorkers.by_top_and_top", true); // Partition service workers
+user_pref("privacy.partition.persistentStorageAccess.omitUserActivation", true); // Enhanced storage access partitioning
+
+// ===== Cache Settings - Daily Mode =====
+user_pref("browser.cache.disk.capacity", 1024000);                // Enable disk cache (1GB)
+user_pref("browser.cache.disk.enable", true);                    // Enable disk cache
+user_pref("browser.cache.disk.smart_size.enabled", true);        // Enable smart sizing of cache
+
+// ===== DuckDuckGo Search Integration =====
+// Set DuckDuckGo as default search engine
+user_pref("browser.search.defaultenginename", "DuckDuckGo");
+user_pref("browser.search.defaultenginename.US", "DuckDuckGo");
+user_pref("browser.search.defaulturl", "https://duckduckgo.com/");
+user_pref("keyword.URL", "https://duckduckgo.com/");
+
+// DuckDuckGo as new tab page
+user_pref("browser.startup.homepage", "https://duckduckgo.com/");
+user_pref("browser.newtabpage.enabled", false);
+user_pref("browser.newtab.url", "https://duckduckgo.com/");
+user_pref("browser.search.hiddenOneOffs", "Google,Amazon.com,Bing,Yahoo,eBay,Twitter");
+
+// ===== Theme Support Settings =====
+user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true); // default is false
+user_pref("svg.context-properties.content.enabled", true);
+
+// ===== Add-on Settings =====
+user_pref("extensions.autoDisableScopes", 0);
+user_pref("extensions.enabledScopes", 15);
+user_pref("extensions.installDistroAddons", true);
