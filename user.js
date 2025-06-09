@@ -120,7 +120,7 @@ user_pref("browser.contentblocking.features.strict", "tp,tpPrivate,cookieBehavio
 
 // ===== Comprehensive Browser Fingerprinting Protections =====
 user_pref("privacy.resistFingerprinting", true);                // Main fingerprinting resistance
-user_pref("privacy.resistFingerprinting.letterboxing", true);     // Letterboxing to reduce screen size fingerprinting
+user_pref("privacy.resistFingerprinting.letterboxing", false);    // Disabled letterboxing to allow full screen usage
 user_pref("privacy.fingerprintingProtection.enabled", true);      // Additional fingerprinting protection (new feature)
 user_pref("privacy.window.maxInnerWidth", 1600);                  // Maximum window width limitation
 user_pref("privacy.window.maxInnerHeight", 900);                  // Maximum window height limitation
@@ -245,6 +245,12 @@ user_pref("browser.tabs.warnOnClose", false);                     // Disable war
 user_pref("browser.tabs.warnOnCloseOtherTabs", false);            // Disable warning when closing other tabs
 user_pref("full-screen-api.warning.delay", 0);                    // Remove fullscreen warning delay
 user_pref("full-screen-api.warning.timeout", 0);                  // Remove fullscreen warning timeout
+user_pref("security.warn_about_mime_changes", false);            // Disable MIME type warnings
+user_pref("security.warn_viewing_mixed", false);                 // Disable mixed content warnings
+user_pref("security.dialog_enable_delay", 0);                    // Remove delay for security dialogs
+user_pref("browser.xul.error_pages.enabled", true);              // Enable built-in error pages
+user_pref("network.http.prompt-temp-redirect", false);           // Disable prompts for temporary redirects
+user_pref("security.insecure_connection_text.enabled", false);   // Disable insecure connection warnings
 
 // ===== Safe Browsing Privacy =====
 // Disable Google Safe Browsing and phishing protection to prevent data sharing with Google
@@ -298,4 +304,12 @@ user_pref("extensions.autoDisableScopes", 0);
 user_pref("extensions.enabledScopes", 15);
 user_pref("extensions.installDistroAddons", true);
 user_pref("xpinstall.signatures.required", false);
+// Prevent extensions from opening their pages after installation
+user_pref("extensions.ui.notifyHidden", true);
+user_pref("extensions.webextensions.restrictedDomains", "");
+user_pref("browser.startup.upgradeDialog.enabled", false);
+user_pref("extensions.getAddons.showPane", false);
+user_pref("extensions.getAddons.cache.enabled", false);
+user_pref("extensions.getAddons.link.url", "");
+user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
 
