@@ -304,13 +304,6 @@ user_pref("extensions.autoDisableScopes", 0);
 user_pref("extensions.enabledScopes", 15);
 user_pref("extensions.installDistroAddons", true);
 user_pref("xpinstall.signatures.required", false);
-// Prevent extensions from opening their pages after installation
-user_pref("extensions.ui.notifyHidden", true);
-user_pref("extensions.webextensions.restrictedDomains", "");
-user_pref("browser.startup.upgradeDialog.enabled", false);
-user_pref("extensions.getAddons.showPane", false);
-user_pref("extensions.getAddons.cache.enabled", false);
-user_pref("extensions.getAddons.link.url", "");
-user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
+
 
 
