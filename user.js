@@ -239,7 +239,7 @@ user_pref("browser.cache.memory.max_entry_size", 5120);           // Limit maxim
 user_pref("browser.privatebrowsing.forceMediaMemoryCache", true); // Force media cache in RAM
 
 // ===== Preferences - For Better Usability =====
-user_pref("accessibility.blockautorefresh", true);                // Block auto-refresh
+user_pref("accessibility.blockautorefresh", false);                // Block auto-refresh
 user_pref("browser.backspace_action", 2);                         // Don't use backspace as back navigation
 user_pref("browser.tabs.warnOnClose", false);                     // Disable warning when closing multiple tabs
 user_pref("browser.tabs.warnOnCloseOtherTabs", false);            // Disable warning when closing other tabs
@@ -312,4 +312,5 @@ user_pref("extensions.getAddons.showPane", false);
 user_pref("extensions.getAddons.cache.enabled", false);
 user_pref("extensions.getAddons.link.url", "");
 user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
+
 
