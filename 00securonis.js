@@ -10,7 +10,7 @@
 
 // Use a PAC file for proxy configuration
 user_pref("network.proxy.type", 2);                              // Use PAC file for proxy configuration
-user_pref("network.proxy.autoconfig_url", "file:///usr/local/share/securonis/proxy.pac"); // Path to PAC file
+user_pref("network.proxy.autoconfig_url", "file:///etc/securonis/onion.pac"); // Path to PAC file
 
 // Fallback to direct SOCKS proxy if PAC fails
 user_pref("network.proxy.socks", "127.0.0.1");                   // SOCKS proxy host (Tor)
@@ -64,7 +64,7 @@ user_pref("browser.search.defaulturl", "https://duckduckgo.com/"); // Search URL
 user_pref("keyword.URL", "https://duckduckgo.com/"); // Keyword search URL
 user_pref("browser.search.order.3", "DuckDuckGo");              // Search engine order
 
-// DuckDuckGo as new tab page
+// Homepage and new tab settings
 user_pref("browser.startup.homepage", "https://duckduckgo.com/"); // Homepage setting
 user_pref("browser.newtabpage.enabled", false);                  // Disable built-in new tab page
 user_pref("browser.newtab.url", "https://duckduckgo.com/"); // Custom new tab URL
