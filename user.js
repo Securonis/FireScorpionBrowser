@@ -27,7 +27,6 @@ user_pref("toolkit.telemetry.shutdownPingSender.enabled", false);
 user_pref("toolkit.telemetry.pioneer-new-studies-available", false);
 user_pref("toolkit.telemetry.reportingpolicy.firstRun", false);
 user_pref("toolkit.telemetry.coverage.opt-out", true);
-user_pref("toolkit.coverage.opt-out", true);
 user_pref("toolkit.coverage.endpoint.base", "");
 user_pref("beacon.enabled", false);
 user_pref("browser.uitour.enabled", false);
@@ -69,10 +68,14 @@ user_pref("signon.rememberSignons", false);
 user_pref("signon.autofillForms", false);
 user_pref("signon.formlessCapture.enabled", false);
 
-// Disable addon recommendations
+// Disable addon recommendations but allow updates
 user_pref("extensions.getAddons.showPane", false);
 user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
 user_pref("browser.discovery.enabled", false);
+// Enable automatic extension updates
+user_pref("app.update.auto", true);
+user_pref("extensions.update.enabled", true);
+user_pref("extensions.update.autoUpdateDefault", true);
 
 // ===== HTTPS and TLS Hardening =====
 // Force HTTPS-only mode for maximum security
@@ -112,6 +115,7 @@ user_pref("privacy.trackingprotection.enabled", true);
 user_pref("privacy.trackingprotection.pbmode.enabled", true);
 user_pref("privacy.trackingprotection.fingerprinting.enabled", true);
 user_pref("privacy.trackingprotection.cryptomining.enabled", true);
+user_pref("privacy.trackingprotection.socialtracking.enabled", true);
 user_pref("privacy.donottrackheader.enabled", true);
 user_pref("privacy.donottrackheader.value", 1);
 
@@ -124,7 +128,13 @@ user_pref("privacy.resistFingerprinting", true);                // Main fingerpr
 user_pref("privacy.resistFingerprinting.letterboxing", true);   // Enable letterboxing
 user_pref("privacy.fingerprintingProtection.enabled", true);    // Additional fingerprinting protection
 user_pref("privacy.resistFingerprinting.block_mozAddonManager", true); // Prevent fingerprinting via add-on detection
-user_pref("browser.display.use_document_fonts", 1);             // Value 0 broke Google Meet
+user_pref("privacy.resistFingerprinting.autoDeclineNoUserInputCanvasPrompts", true); // Auto-decline canvas access
+user_pref("privacy.resistFingerprinting.randomization.daily_reset", true); // Daily reset of randomization
+user_pref("privacy.resistFingerprinting.randomization.enabled", true); // Enable randomization
+user_pref("privacy.resistFingerprinting.randomDataOnCanvasExtract", true); // Randomize canvas extraction
+user_pref("privacy.reduceTimerPrecision", true); // Reduce timer precision
+user_pref("privacy.resistFingerprinting.reduceTimerPrecision.microseconds", 1000); // Set microsecond precision
+// Value 0 is set later in the file for better fingerprinting protection
 user_pref("device.sensors.enabled", false);                     // Disable device sensors
 user_pref("geo.enabled", false);                               // Disable geolocation
 user_pref("webgl.disabled", true);                             // Disable WebGL
@@ -287,9 +297,7 @@ user_pref("browser.search.defaultenginename.US", "DuckDuckGo");
 user_pref("browser.search.defaulturl", "https://duckduckgo.com/");
 user_pref("keyword.URL", "https://duckduckgo.com/");
 
-// DuckDuckGo as new tab page
-user_pref("browser.startup.homepage", "https://duckduckgo.com/");
-user_pref("browser.newtabpage.enabled", false);
+// DuckDuckGo URL Settings
 user_pref("browser.newtab.url", "https://duckduckgo.com/");
 user_pref("browser.search.hiddenOneOffs", "Google,Amazon.com,Bing,Yahoo,eBay,Twitter");
 
@@ -308,7 +316,8 @@ user_pref("extensions.webextensions.restrictedDomains", "accounts-static.cdn.moz
 user_pref("browser.startup.upgradeDialog.enabled", false);
 user_pref("extensions.getAddons.showPane", false);
 user_pref("extensions.getAddons.cache.enabled", false);
-user_pref("extensions.getAddons.link.url", "");
+// Allow extension update checks but disable recommendations
+user_pref("extensions.getAddons.link.url", "https://addons.mozilla.org/%LOCALE%/firefox/");
 user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
 
 // ===== Performance Optimizations =====
@@ -339,16 +348,12 @@ user_pref("privacy.resistFingerprinting.autoDeclineNoUserInputCanvasPrompts", tr
 user_pref("network.http.referer.spoofSource", true);
 user_pref("network.http.sendRefererHeader", 1);
 
-// Disable service workers when possible
-user_pref("dom.serviceWorkers.enabled", false);
-user_pref("dom.push.enabled", false);
+// Service worker ayarları
 
 // Disable clipboard events and notifications
 user_pref("dom.event.clipboardevents.enabled", false);
 
 // Enhanced media protection
-user_pref("media.autoplay.blocking_policy", 2);
-user_pref("media.autoplay.default", 5);
 user_pref("media.eme.enabled", false);
 
 // Disable site reading installed plugins
@@ -404,15 +409,7 @@ user_pref("browser.tabs.unloadOnLowMemory", false);
 user_pref("privacy.trackingprotection.socialtracking.enabled", true);
 user_pref("privacy.trackingprotection.fingerprinting.enabled", true);
 
-// Disable Mozilla telemetry completely
-user_pref("toolkit.telemetry.unified", false);
-user_pref("toolkit.telemetry.server", "");
-user_pref("toolkit.telemetry.archive.enabled", false);
-user_pref("toolkit.telemetry.newProfilePing.enabled", false);
-user_pref("toolkit.telemetry.shutdownPingSender.enabled", false);
-user_pref("toolkit.telemetry.updatePing.enabled", false);
-user_pref("toolkit.telemetry.bhrPing.enabled", false);
-user_pref("toolkit.telemetry.firstShutdownPing.enabled", false);
+// Telemetri ayarları dosyanın başında zaten tanımlanmış
 
 // New tab and homepage settings
 user_pref("browser.startup.page", 1);
@@ -422,16 +419,12 @@ user_pref("browser.newtab.preload", true);
 user_pref("browser.newtabpage.activity-stream.default.sites", "https://duckduckgo.com/");
 user_pref("browser.newtabpage.pinned", "[{\"url\":\"https://duckduckgo.com/\",\"label\":\"DuckDuckGo\"}]");
 user_pref("browser.startup.firstrunSkipsHomepage", false);
-
-// Force DuckDuckGo on new tabs
 user_pref("browser.newtabpage.activity-stream.prerender", true);
 user_pref("browser.newtabpage.activity-stream.showSearch", true);
 user_pref("browser.newtabpage.activity-stream.feeds.topsites", true);
 user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false);
 user_pref("browser.newtabpage.activity-stream.feeds.snippets", false);
-user_pref("browser.newtabpage.activity-stream.topSitesRows", 1);
-user_pref("browser.newtabpage.activity-stream.default.sites", "https://duckduckgo.com/");
-user_pref("browser.newtabpage.enhanced", true);
+user_pref("browser.newtabpage.topSitesRows", 1);
 user_pref("browser.newtabpage.directory.source", "https://duckduckgo.com/");
 user_pref("browser.newtabpage.directory.ping", "");
 user_pref("browser.startup.homepage_override.mstone", "ignore");
@@ -440,14 +433,7 @@ user_pref("browser.startup.homepage_override.buildID", "");
 // ===== Additional Hardening Without Breaking Usability =====
 
 // Enhanced SSL/TLS Security
-user_pref("security.ssl.treat_unsafe_negotiation_as_broken", true);
-user_pref("security.ssl.require_safe_negotiation", true);
-user_pref("security.tls.version.min", 3);                        // Minimum TLS 1.2
-user_pref("security.tls.version.max", 4);                        // Maximum TLS 1.3
 user_pref("security.tls.enable_0rtt_data", false);              // Disable 0-RTT to prevent replay attacks
-user_pref("security.OCSP.require", true);                       // Require OCSP verification
-user_pref("security.cert_pinning.enforcement_level", 2);        // Strict certificate pinning
-user_pref("security.pki.sha1_enforcement_level", 1);           // Reject SHA-1 certificates
 user_pref("security.family_safety.mode", 0);                    // Disable Windows Family Safety cert store
 
 // Enhanced Content Security
@@ -462,9 +448,6 @@ user_pref("security.dialog_enable_delay", 2000);                // 2 second dela
 user_pref("privacy.firstparty.isolate.restrict_opener_access", true); // Strict first party isolation
 user_pref("privacy.resistFingerprinting.letterboxing", true);    // Enable letterboxing
 user_pref("privacy.window.name.update.enabled", true);          // Clear window.name on domain change
-user_pref("privacy.clearOnShutdown.history", true);             // Clear history on shutdown
-user_pref("privacy.clearOnShutdown.downloads", true);           // Clear downloads on shutdown
-user_pref("privacy.clearOnShutdown.cache", true);               // Clear cache on shutdown
 user_pref("privacy.clearOnShutdown.cookies", true);            // Clear cookies for usability
 user_pref("privacy.clearOnShutdown.formdata", true);           // Clear form data on shutdown
 user_pref("privacy.clearOnShutdown.sessions", true);          // Clear session data for usability
@@ -480,12 +463,11 @@ user_pref("dom.disable_beforeunload", false);                    // Disable "Lea
 user_pref("dom.disable_open_during_load", true);                // Prevent automatic window opening
 user_pref("dom.push.connection.enabled", false);                // Disable push notifications
 user_pref("dom.webnotifications.enabled", false);               // Disable web notifications
-user_pref("dom.serviceWorkers.enabled", false);                 // Disable service workers
+// Service worker ayarları dosyanın başında zaten tanımlanmış
 
 // Additional Network Security
 user_pref("network.auth.subresource-http-auth-allow", 1);       // Strict HTTP authentication
-user_pref("network.http.referer.XOriginPolicy", 2);             // Only send referer to same domain
-user_pref("network.http.referer.XOriginTrimmingPolicy", 2);     // Trim cross-origin referer to domain
+// HTTP referrer ayarları
 user_pref("network.http.referer.defaultPolicy", 2);             // Strict referer policy
 user_pref("network.http.referer.defaultPolicy.pbmode", 2);      // Strict referer in private mode
 user_pref("network.proxy.socks_remote_dns", true);              // Force DNS through SOCKS proxy
@@ -498,8 +480,7 @@ user_pref("media.peerconnection.ice.proxy_only_if_behind_proxy", true); // Use p
 user_pref("media.peerconnection.ice.relay_only", false);         // Allow non-relay ICE for usability
 user_pref("media.peerconnection.enabled", true);                 // Keep WebRTC enabled for usability
 user_pref("media.navigator.video.enabled", false);               // Disable video unless needed
-user_pref("media.autoplay.blocking_policy", 2);                  // Strict autoplay blocking
-user_pref("media.autoplay.default", 5);                         // Block autoplay
+// Medya ayarları dosyanın başında zaten tanımlanmış
 
 // Enhanced Extension Security
 user_pref("extensions.webextensions.restrictedDomains", "accounts-static.cdn.mozilla.net,accounts.firefox.com,addons.cdn.mozilla.net,addons.mozilla.org,api.accounts.firefox.com,content.cdn.mozilla.net,discovery.addons.mozilla.org,install.mozilla.org,oauth.accounts.firefox.com,profile.accounts.firefox.com,support.mozilla.org,sync.services.mozilla.com");
@@ -552,12 +533,9 @@ user_pref("network.proxy.socks_remote_dns", true);              // Force DNS thr
 user_pref("network.proxy.no_proxies_on", "");                   // Don't bypass proxy for any addresses
 user_pref("network.security.ports.banned", "");                 // Don't restrict any ports
 user_pref("network.dns.blockDotOnion", false);                 // Allow .onion domains
-user_pref("dom.security.https_only_mode", false);              // Don't force HTTPS (for .onion addresses)
-user_pref("network.http.referer.XOriginPolicy", 2);            // Only send referer to same domain
-user_pref("network.http.referer.XOriginTrimmingPolicy", 2);    // Trim cross-origin referer to domain
+user_pref("dom.security.https_only_mode.onion", false);        // Don't force HTTPS for .onion addresses
 
 // Enhanced Tor-style protections
-user_pref("privacy.resistFingerprinting.autoDeclineNoUserInputCanvasPrompts", true);
 user_pref("privacy.resistFingerprinting.randomDataOnCanvasExtract", true);
 user_pref("privacy.resistFingerprinting.randomization.daily_reset", true);
 user_pref("privacy.reduceTimerPrecision", true);
@@ -579,26 +557,5 @@ user_pref("dom.gamepad.enabled", false);
 user_pref("dom.vibrator.enabled", false);
 user_pref("dom.w3c_touch_events.enabled", 0);
 
-// Fix SSL/TLS settings consistency
-user_pref("security.ssl.require_safe_negotiation", true);
-user_pref("security.ssl.treat_unsafe_negotiation_as_broken", true);
-
-// Special handling for .onion addresses
-user_pref("dom.security.https_only_mode.onion", false);
-
 // Font fingerprinting protection (comment out if breaks important sites)
 user_pref("browser.display.use_document_fonts", 0);
-
-// ===== WebGL Security Settings =====
-// WebGL is disabled by default for maximum privacy and security
-// If you need 3D graphics, maps, or video editing tools, change these to false
-user_pref("webgl.disabled", true);                             // Disable WebGL for privacy
-user_pref("webgl.disable-debug-renderer-info", true);          // Hide WebGL debug info
-user_pref("webgl.enable-debug-renderer-info", false);          // Disable WebGL debug info exposure
-
-// ===== SSL/TLS Security Settings =====
-// Maximum security configuration for SSL/TLS
-// Note: May cause issues with some older servers
-// If you need compatibility with older servers, change both settings to false
-user_pref("security.ssl.require_safe_negotiation", true);      // Require safe SSL negotiation
-user_pref("security.ssl.treat_unsafe_negotiation_as_broken", true); // Mark unsafe SSL as broken
