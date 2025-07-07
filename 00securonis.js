@@ -191,25 +191,14 @@ pref("browser.urlbar.suggest.searches", false);
 pref("plugins.notifyMissingFlash", false);
 
 /*
-  Customized new tab page. Set DuckDuckGo as new tab page.
+  Browser startup and homepage settings
 */
-// Set DuckDuckGo as the new tab page (using current Firefox preferences)
+// Set DuckDuckGo as the homepage only
 pref("browser.startup.homepage", "https://duckduckgo.com/");
-// Modern Firefox new tab settings
-pref("browser.newtabpage.enabled", true);
-pref("browser.newtabpage.activity-stream.default.sites", "https://duckduckgo.com/");
-pref("browser.newtabpage.pinned", "[{\"url\":\"https://duckduckgo.com/\",\"label\":\"DuckDuckGo\"}]");
-// Force custom new tab URL through override
 pref("browser.startup.page", 1);
-pref("browser.startup.homepage_override.mstone", "ignore");
-// Disable built-in new tab content
-pref("browser.newtabpage.activity-stream.showSearch", false);
-pref("browser.newtabpage.activity-stream.feeds.topsites", false);
-pref("browser.newtabpage.activity-stream.prerender", false);
-// Use custom URL for new tabs
+// Keep new tabs as blank pages
+pref("browser.newtabpage.enabled", false);
 pref("browser.newtab.preload", false);
-pref("browser.newtabpage.activity-stream.default.sites", "");
-pref("browser.newtabpage.activity-stream.discoverystream.config", "{\"hardcoded_basic_layout\":false,\"personalized\":false,\"layout_endpoint\":\"https://duckduckgo.com/\"}");
 
 pref("browser.newtabpage.activity-stream.section.highlights.includePocket", false);
 pref("extensions.pocket.onSaveRecs", false);
